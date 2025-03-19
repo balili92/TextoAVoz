@@ -19,9 +19,10 @@ def ajustar_longitud_texto(texto):
  #Recorremos cada sentencia y contamos el número de palabras
 
     for sentencia in sentencias:
+        directorio = os.getcwd()
         if contar_palabras(sentencia) + num_palabras > longitud_maxima:
             #Abrimos un nuevo documento
-            with open(f'/home/balili92/MasterConquerBlocks/PYTHON/PROYECTOS/TXTaVOZ/doc{num_doc}.txt','w',encoding='utf-8') as file:
+            with open(f'{directorio}/doc{num_doc}.txt','w',encoding='utf-8') as file:
                 file.write("\n".join(contenido_documento))
             #Incrementamos el num de documento
             num_doc += 1
@@ -33,7 +34,7 @@ def ajustar_longitud_texto(texto):
             num_palabras += contar_palabras(sentencia) #Sumamos las palabras de la sentencia
 
     if contenido_documento: #Para el último doc. hayan las palabras que hayan. Si hay contenido, se guarda
-        with open(f'/home/balili92/MasterConquerBlocks/PYTHON/PROYECTOS/TXTaVOZ/doc{num_doc}.txt','w',encoding='utf-8') as file:
+        with open(f'{directorio}/doc{num_doc}.txt','w',encoding='utf-8') as file:
             file.write("\n".join(contenido_documento))
 
             

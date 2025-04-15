@@ -9,56 +9,91 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QVBoxLayout
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(685, 301)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class Ui_ReproductorDeTextos(object):
+    def setupUi(self, ReproductorDeTextos):
+        ReproductorDeTextos.setObjectName("ReproductorDeTextos")
+        ReproductorDeTextos.resize(638, 414)
+        ReproductorDeTextos.setFocusPolicy(QtCore.Qt.ClickFocus)
+        ReproductorDeTextos.setTabShape(QtWidgets.QTabWidget.Rounded)
+        self.centralwidget = QtWidgets.QWidget(ReproductorDeTextos)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.centralwidget.setFont(font)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(170, 40, 321, 121))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
-        self.verticalLayout.setContentsMargins(0, 9, 9, 0)
-        self.verticalLayout.setSpacing(2)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.lineEdit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.verticalLayout.addWidget(self.lineEdit)
-        self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton.setAutoFillBackground(False)
+        self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(9, 9, 611, 351))
+        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setObjectName("gridLayout")
+       
+
+        self.label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
+        self.label.setFrameShape(QtWidgets.QFrame.Box)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+
+        self.pushButton = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.pushButton.setObjectName("pushButton")
-        self.verticalLayout.addWidget(self.pushButton)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 685, 20))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.gridLayout.addWidget(self.pushButton, 3, 0, 1, 1)
+        self.pushButton_3 = QtWidgets.QPushButton(self.gridLayoutWidget)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        font.setKerning(True)
+        font.setStyleStrategy(QtGui.QFont.PreferAntialias)
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setMouseTracking(False)
+        self.pushButton_3.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.pushButton_3.setAcceptDrops(False)
+        self.pushButton_3.setStatusTip("")
+        self.pushButton_3.setWhatsThis("")
+        self.pushButton_3.setAccessibleDescription("")
+        self.pushButton_3.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.pushButton_3.setAutoFillBackground(False)
+        self.pushButton_3.setIconSize(QtCore.QSize(16, 16))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.clicked.connect(self.abrir_archivo)
+
+        self.gridLayout.addWidget(self.pushButton_3, 5, 0, 1, 1)
+        self.textEdit = QtWidgets.QTextEdit(self.gridLayoutWidget)
+        self.textEdit.setObjectName("textEdit")
+        self.gridLayout.addWidget(self.textEdit, 1, 0, 1, 1)
+
+    
+
+        ReproductorDeTextos.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(ReproductorDeTextos)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        self.toolBar = QtWidgets.QToolBar(MainWindow)
+        ReproductorDeTextos.setStatusBar(self.statusbar)
+        self.toolBar = QtWidgets.QToolBar(ReproductorDeTextos)
         self.toolBar.setObjectName("toolBar")
-        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
+        ReproductorDeTextos.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(ReproductorDeTextos)
+        QtCore.QMetaObject.connectSlotsByName(ReproductorDeTextos)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, ReproductorDeTextos):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "Convertir"))
-        self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
+        ReproductorDeTextos.setWindowTitle(_translate("ReproductorDeTextos", "Reproductor de Texto"))
+        self.label.setText(_translate("ReproductorDeTextos", "Introduzca su texto aquí"))
+        self.pushButton.setText(_translate("ReproductorDeTextos", "Reproducir"))
+        self.pushButton_3.setText(_translate("ReproductorDeTextos", "Seleccionar Archivo"))
+        self.toolBar.setWindowTitle(_translate("ReproductorDeTextos", "toolBar"))
 
+        
+    def abrir_archivo(self):
+        archivo, _ = QFileDialog.getOpenFileName(self,'Selecciona un archivo')
+        if archivo:
+            self.textEdit.setText(f"{archivo}")
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        else:
+            self.textEdit.setText('No se seleccionó ningún archivo')
+           

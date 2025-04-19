@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QFileDialog
 import sys
 import os
 from tokenizador import borrar_documentos
-from intento_clases import TextoPlano,TextoURL, TextoPDF
+from modelos import TextoPlano,TextoURL, TextoPDF
 
 
 class MiVentana(QMainWindow, Ui_ReproductorDeTextos, QTextEdit):
@@ -12,6 +12,7 @@ class MiVentana(QMainWindow, Ui_ReproductorDeTextos, QTextEdit):
         self.setupUi(self)  # Configura la interfaz gráfica
     #Lógica de botones
         self.pushButton.clicked.connect(self.reproducir_texto)
+        self.pushButton_3.clicked.connect(self.abrir_archivo)
        
 
     def reproducir_texto(self):
@@ -31,6 +32,13 @@ class MiVentana(QMainWindow, Ui_ReproductorDeTextos, QTextEdit):
                 texto = TextoPlano(texto)
                 texto.leer_texto()
 
+    def abrir_archivo(self):
+        archivo, _ = QFileDialog.getOpenFileName(self,'Selecciona un archivo')
+        if archivo:
+            self.textEdit.setText(f"{archivo}")
+
+        else:
+            self.textEdit.setText('No se seleccionó ningún archivo')    
    
         
 

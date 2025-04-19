@@ -9,7 +9,35 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QVBoxLayout
+from PyQt5.QtWidgets import QTextEdit
+
+class PlaceholderTextEdit(QTextEdit):
+    def __init__(self, placeholder, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.placeholder_text = placeholder
+        self.placeholder_visible = True
+
+        # Poner el placeholder al iniciar
+        self.setPlainText(self.placeholder_text)
+        self.setStyleSheet("QTextEdit { color: #a9a9a9; }")
+        self.setAlignment(QtCore.Qt.AlignLeft)
+
+    def focusInEvent(self, event):
+        # Al ganar foco por primera vez, borrar el placeholder
+        if self.placeholder_visible:
+            self.clear()
+            self.setStyleSheet("QTextEdit { color: black; }")
+            self.placeholder_visible = False
+        super().focusInEvent(event)
+
+    def focusOutEvent(self, event):
+        # Si pierde foco y está vacío, volver a mostrar el placeholder
+        if not self.toPlainText().strip():
+            self.setPlainText(self.placeholder_text)
+            self.setStyleSheet("QTextEdit { color: #a9a9a9; }")
+            self.setAlignment(QtCore.Qt.AlignLeft)
+            self.placeholder_visible = True
+        super().focusOutEvent(event)
 
 
 class Ui_ReproductorDeTextos(object):
@@ -17,32 +45,44 @@ class Ui_ReproductorDeTextos(object):
         ReproductorDeTextos.setObjectName("ReproductorDeTextos")
         ReproductorDeTextos.resize(638, 414)
         ReproductorDeTextos.setFocusPolicy(QtCore.Qt.ClickFocus)
-        ReproductorDeTextos.setTabShape(QtWidgets.QTabWidget.Rounded)
+
+        # El widget central
         self.centralwidget = QtWidgets.QWidget(ReproductorDeTextos)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setWeight(50)
-        self.centralwidget.setFont(font)
         self.centralwidget.setObjectName("centralwidget")
-        self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(9, 9, 611, 351))
-        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        ReproductorDeTextos.setCentralWidget(self.centralwidget)
+
+        # Crear el layout principal y asignarlo al centralwidget
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout.setSpacing(10)
         self.gridLayout.setObjectName("gridLayout")
-       
 
-        self.label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        self.label.setFrameShape(QtWidgets.QFrame.Box)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        #Crear layout horizontal para los botones
+        self.buttonLayout = QtWidgets.QHBoxLayout()
+        #Agregar layout al layout ppal
+        self.gridLayout.addLayout(self.buttonLayout,2,0,1,1)
 
-        self.pushButton = QtWidgets.QPushButton(self.gridLayoutWidget)
+
+
+        # Campo de texto
+        self.textEdit = PlaceholderTextEdit('Escriba su texto aquí...',self.centralwidget)
+        self.textEdit.setObjectName("textEdit")
+        self.gridLayout.addWidget(self.textEdit, 1, 0, 1, 1)
+
+
+        
+        # Botón reproducir
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
-        self.gridLayout.addWidget(self.pushButton, 3, 0, 1, 1)
-        self.pushButton_3 = QtWidgets.QPushButton(self.gridLayoutWidget)
+        self.buttonLayout.addWidget(self.pushButton)
+
+        # Botón para pausar
+        self.pushButton_pausa = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setObjectName("pushButton_pausa")
+        self.buttonLayout.addWidget(self.pushButton_pausa)
+
+        # Botón seleccionar archivo
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -50,29 +90,27 @@ class Ui_ReproductorDeTextos(object):
         font.setKerning(True)
         font.setStyleStrategy(QtGui.QFont.PreferAntialias)
         self.pushButton_3.setFont(font)
-        self.pushButton_3.setMouseTracking(False)
         self.pushButton_3.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.pushButton_3.setAcceptDrops(False)
-        self.pushButton_3.setStatusTip("")
-        self.pushButton_3.setWhatsThis("")
-        self.pushButton_3.setAccessibleDescription("")
-        self.pushButton_3.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.pushButton_3.setAutoFillBackground(False)
-        self.pushButton_3.setIconSize(QtCore.QSize(16, 16))
         self.pushButton_3.setObjectName("pushButton_3")
-        self.pushButton_3.clicked.connect(self.abrir_archivo)
+        self.buttonLayout.addWidget(self.pushButton_3)
 
-        self.gridLayout.addWidget(self.pushButton_3, 5, 0, 1, 1)
-        self.textEdit = QtWidgets.QTextEdit(self.gridLayoutWidget)
-        self.textEdit.setObjectName("textEdit")
-        self.gridLayout.addWidget(self.textEdit, 1, 0, 1, 1)
+       
 
-    
+    # Establecer que todos los botones crezcan por igual
+        self.buttonLayout.setStretch(0, 1)  # Reproducir
+        self.buttonLayout.setStretch(1, 1)  # Pausar
+        self.buttonLayout.setStretch(2, 1)  # Seleccionar Archivo
 
-        ReproductorDeTextos.setCentralWidget(self.centralwidget)
+    #Añadir iconos
+        self.pushButton.setIcon(QtGui.QIcon("icons/play.svg"))
+        self.pushButton_pausa.setIcon(QtGui.QIcon("icons/pause.svg"))
+        self.pushButton_3.setIcon(QtGui.QIcon("icons/folder-plus.svg"))
+
+        # Status bar y toolbar
         self.statusbar = QtWidgets.QStatusBar(ReproductorDeTextos)
         self.statusbar.setObjectName("statusbar")
         ReproductorDeTextos.setStatusBar(self.statusbar)
+
         self.toolBar = QtWidgets.QToolBar(ReproductorDeTextos)
         self.toolBar.setObjectName("toolBar")
         ReproductorDeTextos.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
@@ -83,17 +121,8 @@ class Ui_ReproductorDeTextos(object):
     def retranslateUi(self, ReproductorDeTextos):
         _translate = QtCore.QCoreApplication.translate
         ReproductorDeTextos.setWindowTitle(_translate("ReproductorDeTextos", "Reproductor de Texto"))
-        self.label.setText(_translate("ReproductorDeTextos", "Introduzca su texto aquí"))
         self.pushButton.setText(_translate("ReproductorDeTextos", "Reproducir"))
         self.pushButton_3.setText(_translate("ReproductorDeTextos", "Seleccionar Archivo"))
+        self.pushButton_pausa.setText(_translate("ReproductorDeTextos", "Pausar"))
         self.toolBar.setWindowTitle(_translate("ReproductorDeTextos", "toolBar"))
 
-        
-    def abrir_archivo(self):
-        archivo, _ = QFileDialog.getOpenFileName(self,'Selecciona un archivo')
-        if archivo:
-            self.textEdit.setText(f"{archivo}")
-
-        else:
-            self.textEdit.setText('No se seleccionó ningún archivo')
-           

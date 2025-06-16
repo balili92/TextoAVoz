@@ -1,0 +1,30 @@
+# Conversor de Texto a Voz - Requisitos
+
+# Procesamiento de texto y tokenización
+nltk==3.8.1
+
+# Conversión de texto a voz
+gTTS==2.5.1
+
+# Reproducción de audio
+pygame==2.5.2
+
+# Interfaz gráfica
+PyQt5==5.15.9
+
+# Extracción de texto desde artículos web
+newspaper3k==0.2.8
+
+# Lectura de archivos PDF
+PyMuPDF==1.24.1
+
+# Manejo de codificaciones
+chardet==5.2.0
+
+# Requisitos de newspaper3k
+beautifulsoup4==4.12.3
+lxml==5.1.0
+feedparser==6.0.11
+requests==2.31.0
+tqdm==4.66.2
+cssselect==1.2.0

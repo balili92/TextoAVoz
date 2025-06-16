@@ -1,120 +1,93 @@
-Proyecto: Conversor de Texto a Voz con Tokenización y Soporte de Archivos
-Descripción
-Este proyecto tiene como objetivo principal convertir textos en archivos de audio utilizando la tecnología de conversión de texto a voz (TTS). El sistema admite diversos tipos de fuentes de texto, como entradas manuales, artículos de la web (mediante URLs) y documentos en formato PDF. Además, implementa la tokenización del texto para asegurarse de que los textos largos se fragmenten adecuadamente antes de convertirlos en audio.
+# 🎧 Conversor de Texto a Voz
+🗣️ Convierte textos, URLs y PDFs en audios MP3 con una interfaz gráfica amigable
 
-Características principales
-Conversión de Texto a Voz: Convierte el texto proporcionado en archivos de audio en formato MP3.
 
-Tokenización: Si el texto es demasiado largo, el sistema lo divide en fragmentos para no superar el límite de palabras por archivo de audio.
 
-Soporte de múltiples formatos: Se soportan diferentes tipos de archivos de entrada como:
 
-Texto ingresado manualmente.
+## 📚 Descripción
+Este proyecto convierte contenido textual en archivos de audio utilizando tecnología de Text-to-Speech (TTS). Es ideal para crear audios a partir de:
 
-Artículos web (utilizando URLs).
+📝 Texto manual
 
-Archivos PDF (extraído del contenido del archivo).
+🌐 Artículos web (mediante URL)
 
-Archivos MP3 (para reproducción directa).
+📄 Archivos PDF
 
-Interfaz de Usuario: Interfaz gráfica para seleccionar archivos, controlar la reproducción y generar audios de manera fácil.
+También incluye un sistema de tokenización para dividir textos largos antes de generar el audio.
 
-Tecnologías usadas
-Python: Lenguaje de programación principal.
+## ✨ Características
+Función	Descripción
+🔊 Conversión TTS	Convierte texto a audio MP3 usando gTTS
+✂️ Tokenización	Divide textos >100 palabras en fragmentos para asegurar buena conversión
+📂 Soporte de formatos	Entrada desde texto manual, URLs, PDF y reproducción de MP3
+🎛️ Interfaz Gráfica (GUI)	Usa PyQt5 para facilitar la interacción del usuario
+🎵 Reproducción de Audio	Control de reproducción con pygame
 
-nltk: Para tokenizar y procesar el texto en fragmentos.
+## 🧰 Tecnologías Usadas
+Herramienta	Uso
+Python	Lenguaje principal
+nltk	Tokenización de texto
+gTTS	Conversión texto a voz
+PyQt5	Interfaz gráfica
+pygame	Reproducción de audio
+newspaper3k	Extracción de texto desde sitios web
+PyMuPDF (fitz)	Lectura y extracción de texto desde PDFs
 
-gTTS (Google Text-to-Speech): Para convertir el texto en archivos de audio en formato MP3.
+## 🗂️ Estructura del Proyecto
 
-PyQt5: Para la interfaz gráfica de usuario (GUI).
-
-pygame: Para la reproducción del audio generado.
-
-newspaper3k: Para extraer el texto de los artículos web.
-
-PyMuPDF (fitz): Para leer y extraer texto de archivos PDF.
-
-Estructura del Proyecto
-bash
-Copiar
-Editar
 ├── Clases/
-│ ├── ConvertidorTextoAVoz.py # Lógica para convertir texto a audio
-│ ├── Tokenizador.py # Lógica para tokenizar textos largos
-│ ├── DocumentoPdf.py # Lógica para leer documentos PDF
-│ ├── ArticuloWeb.py # Lógica para leer artículos web
-│ └── TextoFuente.py # Clase base para fuentes de texto
+│   ├── ConvertidorTextoAVoz.py     # Lógica de conversión TTS
+│   ├── Tokenizador.py              # División de texto largo
+│   ├── DocumentoPdf.py             # Lectura de archivos PDF
+│   ├── ArticuloWeb.py              # Lectura de artículos web
+│   └── TextoFuente.py              # Clase base de fuentes de texto
+│
 ├── interfaz/
-│ ├── main.py # Código para la interfaz gráfica de usuario (GUI)
-│ ├── resources/ # Archivos y recursos para la interfaz
-│ └── assets/ # Archivos estáticos (como imágenes o iconos)
-├── requirements.txt # Dependencias del proyecto
-├── README.md # Este archivo
-└── ejemplo_audio.mp3 # Ejemplo de archivo generado
-Cómo usar el proyecto
-Instalar las dependencias:
-
-Primero, asegúrate de tener Python instalado. Luego, instala las dependencias necesarias utilizando pip:
-
+│   ├── main.py                     # Interfaz gráfica
+│   ├── resources/                  # Recursos visuales
+│   └── assets/                     # Iconos e imágenes
+│
+├── ejemplo_audio.mp3               # Ejemplo generado
+├── requirements.txt                # Dependencias del proyecto
+└── README.md                       # Este archivo
+## ▶️ Cómo Usar
+1. Instala las dependencias
 bash
 Copiar
 Editar
 pip install -r requirements.txt
-Iniciar la aplicación:
-
-Una vez que las dependencias estén instaladas, puedes ejecutar la interfaz gráfica:
-
+2. Inicia la aplicación
 bash
 Copiar
 Editar
 python interfaz/main.py
-Seleccionar una fuente de texto:
+3. Selecciona una fuente de texto
+✍️ Escribe texto manual
 
-Si deseas ingresar el texto manualmente, puedes hacerlo en el cuadro de texto proporcionado.
+🔗 Ingresa una URL
 
-Si tienes un artículo web, simplemente ingresa la URL en el cuadro correspondiente.
+📁 Sube un PDF
 
-Si tienes un archivo PDF, selecciona el archivo en el cuadro de diálogo.
+4. Genera y reproduce el audio
+✅ Presiona el botón Generar Audio
 
-Generar el audio:
+🔊 Controla la reproducción (play, pausa, stop)
 
-Después de seleccionar o ingresar el texto, presiona el botón para generar el audio. El sistema convertirá el texto en un archivo de audio y lo reproducirá automáticamente.
+## 🧠 Comportamiento del Tokenizador
+Si el texto supera las 100 palabras, se fragmenta automáticamente.
 
-Reproducir el audio:
+Cada fragmento se convierte en un archivo de audio separado.
 
-Una vez generado, el audio se puede reproducir, pausar o detener usando los botones disponibles en la interfaz.
+Los archivos temporales se eliminan tras la conversión.
 
-Comportamiento del Tokenizador
-Si el texto excede las 100 palabras, el sistema lo divide en fragmentos de texto más pequeños y guarda cada fragmento en un archivo de texto separado.
+## ⚠️ Manejo de Errores
+Situación	Acción del sistema
+❌ Texto vacío o no válido	Muestra mensaje de error
+🌐 URL incorrecta o no accesible	Notificación al usuario
+📄 PDF ilegible	Error manejado con mensaje informativo
 
-Luego, convierte cada archivo de texto en un archivo de audio MP3.
+## 🤝 Contribuciones
+¡Las contribuciones son bienvenidas!
+Abre un pull request con tus mejoras y asegúrate de probar antes de enviar.
 
-Los archivos de texto generados temporalmente se eliminan después de la conversión a audio.
 
-Manejo de errores
-Si el texto no es accesible o está vacío, el sistema mostrará un mensaje de error y no generará ningún archivo de audio.
-
-En el caso de los artículos web, si la URL no es válida o no se puede procesar, se notificará al usuario.
-
-Requisitos
-Python 3.x
-
-Dependencias:
-
-nltk
-
-gTTS
-
-pygame
-
-PyQt5
-
-newspaper3k
-
-PyMuPDF
-
-Contribuciones
-Si deseas contribuir al proyecto, puedes hacerlo enviando un pull request a través de GitHub. Asegúrate de realizar pruebas antes de enviar cambios significativos.
-
-Licencia
-Este proyecto está bajo la Licencia MIT. Para más detalles, consulta el archivo LICENSE.
